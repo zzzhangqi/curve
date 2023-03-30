@@ -62,6 +62,7 @@ void DeferSync::SyncTask() {
             inodes.swap(inodes_);
         }
         for (const auto& inode : inodes) {
+            UniqueLock lk(inode->GetInodeLocked());
             inode->Async(nullptr, true);
         }
         inodes.clear();
